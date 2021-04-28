@@ -130,21 +130,13 @@ CoroutineBodyStmt::CoroutineBodyStmt(CoroutineBodyStmt::CtorArgs const &Args)
 /// Constructor for the CilkForRangeStmt
 CilkForRangeStmt::CilkForRangeStmt(const ASTContext &C,
                                    CXXForRangeStmt *ForRange,
-<<<<<<< HEAD
-                                   VarDecl *LoopIndex, DeclStmt *Limit,
-                                   Expr *Cond, Expr *Inc,
-=======
                                    VarDecl *LoopIndex, DeclStmt *LocalLoopIndex,
                                    DeclStmt *Limit, Expr *Cond, Expr *Inc,
->>>>>>> 82a9928fd2334b8f00f526edf5f7d6fb46aba47b
                                    DeclStmt *LoopIndexStmt)
     : Stmt(CilkForRangeStmtClass) {
   SubExprs[FORRANGE] = ForRange;
   setLoopIndex(C, LoopIndex);
-<<<<<<< HEAD
-=======
   SubExprs[LOCALLOOPINDEX] = LocalLoopIndex;
->>>>>>> 82a9928fd2334b8f00f526edf5f7d6fb46aba47b
   SubExprs[COND] = Cond;
   SubExprs[INC] = Inc;
   SubExprs[LOOPINDEXSTMT] = LoopIndexStmt;
@@ -172,8 +164,6 @@ void CilkForRangeStmt::setLoopIndex(const ASTContext &C, VarDecl *V) {
       new (C) DeclStmt(DeclGroupRef(V), VarRange.getBegin(), VarRange.getEnd());
 }
 
-<<<<<<< HEAD
-=======
 VarDecl *CilkForRangeStmt::getLocalLoopIndex() {
   Decl *LV = cast<DeclStmt>(getLocalLoopIndexStmt())->getSingleDecl();
   assert(LV && "No local loop index in CilkForRangeStmt");
@@ -184,7 +174,6 @@ const VarDecl *CilkForRangeStmt::getLocalLoopIndex() const {
   return const_cast<CilkForRangeStmt *>(this)->getLocalLoopIndex();
 }
 
->>>>>>> 82a9928fd2334b8f00f526edf5f7d6fb46aba47b
 /// returns the FORRANGE stmt embedded in the CilkForRange. (May be null.)
 CXXForRangeStmt *CilkForRangeStmt::getCXXForRangeStmt() const {
   return cast_or_null<CXXForRangeStmt>(SubExprs[FORRANGE]);
